@@ -29,7 +29,7 @@ async function createNewUser() {
     name: 'chicks',
     phone: '7224545645',
     type: 'volunteer',
-    location: '34.67657225397399, -82.83541151936164'
+    location: '34.0549, -118.2426'
   };
 
   try {
@@ -57,7 +57,7 @@ async function createHelpRequest() {
   const helpRequestData = {
     name: "Jane Doe",
     phone: "1234567890",
-    location: "California",
+    location: "34.0549, -118.2426",
     type_of_help: "medical"
   };
 
@@ -78,7 +78,7 @@ async function runTests() {
   // await getAllUsers();
   await createNewUser();
   // await getAllHelpRequests();
-  // await createHelpRequest();
+  await createHelpRequest();
 }
 
 runTests();

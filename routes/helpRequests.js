@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
       name,
       phone,
       location,
-      type_of_help,
+      type_of_help
   }});
     res.status(201).json(newHelpRequest);
   } catch (err) {
