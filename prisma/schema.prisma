@@ -1,0 +1,36 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+    id  String @id @default(uuid())
+    name    String  
+    type    victimType
+    location String
+    needs   Json?
+    available_resources Json?
+}
+
+model HelpRequest {
+    id  String @id @default(uuid())
+    name    String  
+    phone   String
+    location String
+    type_of_help    String
+    status  requestStatus @default(pending)
+}
+
+enum requestStatus{
+    pending
+    accepted
+    completed
+}
+enum victimType{
+    victim
+    volunteer
+}
