@@ -11,6 +11,7 @@ model User {
     id  String @id @default(uuid())
     name    String  
     type    victimType
+    phone   String
     location String
     needs   Json?
     available_resources Json?

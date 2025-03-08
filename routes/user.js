@@ -35,6 +35,7 @@ router.post('/', async (req, res) => {
     const newUser = await prisma.User.create({data:{
       name,
       type,
+      phone,
       location,
       needs,
       available_resources
@@ -54,6 +55,7 @@ router.put('/:id', async (req, res) => {
       await user.update({data:{
         name,
         type,
+        phone,
         location,
         needs,
         available_resources
