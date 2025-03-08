@@ -1,13 +1,14 @@
 const express = require("express");
 const HelpRequest = require("../models/HelpRequest");
 const User = require("../models/User"); // To find volunteers
+const { prisma } = require("../models/db");
 const router = express.Router();
 
 // 📌 1. Submit a new help request
 router.post("/", async (req, res) => {
   try {
     const { name, phone, location, type_of_help } = req.body;
-    const newHelpRequest = await HelpRequest.create({
+    const newHelpRequest = await prisma.HelpRequest.create({
       name,
       phone,
       location,
@@ -25,7 +26,7 @@ router.get("/match/:location", async (req, res) => {
     const { location } = req.params;
 
     // Fetch volunteers near the location (exact match for now)
-    const volunteers = await User.findAll({ where: { location } });
+    const volunteers = await prisma.User.findAll({ where: { location } });
 
     if (volunteers.length === 0) {
       return res.status(404).json({ message: "❌ No volunteers found nearby" });
@@ -43,7 +44,7 @@ router.post("/:id/accept", async (req, res) => {
     const { id } = req.params;
     const { volunteer_id } = req.body;
 
-    const helpRequest = await HelpRequest.findByPk(id);
+    const helpRequest = await prisma.HelpRequest.findByPk(id);
     if (!helpRequest) {
       return res.status(404).json({ message: "❌ Help request not found" });
     }
@@ -60,8 +61,8 @@ router.post("/:id/accept", async (req, res) => {
 // 📌 4. Get all volunteers & help requests for the map
 router.get("/map-data", async (req, res) => {
   try {
-    const volunteers = await User.findAll();
-    const helpRequests = await HelpRequest.findAll();
+    const volunteers = await prisma.User.findAll();
+    const helpRequests = await prisma.HelpRequest.findAll();
 
     res.json({ volunteers, helpRequests });
   } catch (err) {

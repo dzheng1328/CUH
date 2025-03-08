@@ -14,18 +14,18 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/help-requests", helpRequestRoutes);  // Register new routes
 
-sequelize.authenticate()
-  .then(() => console.log("✅ Connected to RDS"))
-  .catch(err => console.error("❌ Unable to connect to the RDS database:", err));
+// sequelize.authenticate()
+//   .then(() => console.log("✅ Connected to RDS"))
+//   .catch(err => console.error("❌ Unable to connect to the RDS database:", err));
   
-// Sync database (Creates tables if they don’t exist)
-sequelize.sync({ alter: true })
-  .then(() => {
-    console.log("✅ Database & tables created!");
-  })
-  .catch((error) => {
-    console.error("❌ Error syncing database:", error.message, error);
-  });
+// // Sync database (Creates tables if they don’t exist)
+// sequelize.sync({ alter: true })
+//   .then(() => {
+//     console.log("✅ Database & tables created!");
+//   })
+//   .catch((error) => {
+//     console.error("❌ Error syncing database:", error.message, error);
+//   });
 
 // Test Route
 app.get("/", (req, res) => {
