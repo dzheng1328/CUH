@@ -1,0 +1,31 @@
+### Test API Root
+GET http://disasterrelief.cpfjyjv0fsdq.us-west-2.rds.amazonaws.com:3306/
+
+### Get All Users
+GET http://disasterrelief.cpfjyjv0fsdq.us-west-2.rds.amazonaws.com:3306/api/users
+
+### Create a New User
+POST http://disasterrelief.cpfjyjv0fsdq.us-west-2.rds.amazonaws.com:3306
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "type": "volunteer",
+  "location": "New York",
+  "needs": null,
+  "available_resources": { "water": 10, "food": 5 }
+}
+
+### Get All Help Requests
+GET http://disasterrelief.cpfjyjv0fsdq.us-west-2.rds.amazonaws.com:3306/api/help-requests
+
+### Create a Help Request
+POST http://disasterrelief.cpfjyjv0fsdq.us-west-2.rds.amazonaws.com:3306/api/help-requests
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "phone": "1234567890",
+  "location": "California",
+  "type_of_help": "medical"
+}
