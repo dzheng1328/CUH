@@ -8,15 +8,27 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const { name, phone, location, type_of_help } = req.body;
-    const newHelpRequest = await prisma.HelpRequest.create({
+    const newHelpRequest = await prisma.HelpRequest.create({data:{
       name,
       phone,
       location,
       type_of_help,
-    });
+  }});
     res.status(201).json(newHelpRequest);
   } catch (err) {
     res.status(500).json({ message: "❌ Error creating help request", error: err });
+  }
+});  
+
+
+// 1a. Get all help requests
+router.get("/", async (req, res) => {
+  try{
+    const allHelp = await prisma.HelpRequest.findMany();
+    res.status(200).json(allHelp);
+  }
+  catch (err){
+    res.status(500).json({ message:'❌ Error fetching users', error: err});
   }
 });
 
@@ -26,7 +38,7 @@ router.get("/match/:location", async (req, res) => {
     const { location } = req.params;
 
     // Fetch volunteers near the location (exact match for now)
-    const volunteers = await prisma.User.findAll({ where: { location } });
+    const volunteers = await prisma.User.findAll({data:{ where: { location } }});
 
     if (volunteers.length === 0) {
       return res.status(404).json({ message: "❌ No volunteers found nearby" });
@@ -70,7 +82,16 @@ router.get("/map-data", async (req, res) => {
   }
 });
 
-//console.log(router); // This should print the router object
+//5. DELETE ALL HELP REQUESTS CAUTION
+router.delete('/clear', async (req, res) => {
+  try {
+    await prisma.HelpRequest.deleteMany();  // Deletes all help requests from the helpRequests table
+    res.status(200).json({ message: '✅ All help requests have been deleted' });
+  } catch (err) {
+    res.status(500).json({ message: '❌ Error deleting all help requests', error: err });
+  }
+});
+
 
 module.exports = router;
 

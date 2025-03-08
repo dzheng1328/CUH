@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/User');
 const router = express.Router();
+const { prisma } = require("../models/db");
 
 // Get all users
 router.get('/', async (req, res) => {
@@ -31,13 +32,13 @@ router.post('/', async (req, res) => {
   try {
     console.log(req.body);
     const { name, type, location, needs, available_resources } = req.body;
-    const newUser = await prisma.User.create({
+    const newUser = await prisma.User.create({data:{
       name,
       type,
       location,
       needs,
       available_resources
-    });
+  }});
     res.status(201).json(newUser);
   } catch (err) {
     res.status(500).json({ message: '❌ Error creating user', error: err });
@@ -50,13 +51,13 @@ router.put('/:id', async (req, res) => {
     const user = await prisma.User.findByPk(req.params.id);
     if (user) {
       const { name, type, location, needs, available_resources } = req.body;
-      await user.update({
+      await user.update({data:{
         name,
         type,
         location,
         needs,
         available_resources
-      });
+    }});
       res.json(user);
     } else {
       res.status(404).json({ message: '❌ User not found' });
@@ -80,5 +81,16 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ message: '❌ Error deleting user', error: err });
   }
 });
+
+//DELETES ALL USERS CAUTION
+router.delete('/clear', async (req, res) => {
+  try {
+    const result = await prisma.User.deleteMany();  // Deletes all users from the User table
+    res.status(200).json({ message: '✅ All users have been deleted', deletedCount: result.count });
+  } catch (err) {
+    res.status(500).json({ message: '❌ Error deleting all users', error: err });
+  }
+});
+
 
 module.exports = router;
