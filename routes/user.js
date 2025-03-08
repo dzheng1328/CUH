@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     console.log(req.body);
-    const { name, type, location, needs, available_resources } = req.body;
+    const { name, type, location, phone, needs, available_resources } = req.body;
     const newUser = await prisma.User.create({data:{
       name,
       type,
@@ -51,7 +51,7 @@ router.put('/:id', async (req, res) => {
   try {
     const user = await prisma.User.findByPk(req.params.id);
     if (user) {
-      const { name, type, location, needs, available_resources } = req.body;
+      const { name, type, location, phone, needs, available_resources } = req.body;
       await user.update({data:{
         name,
         type,

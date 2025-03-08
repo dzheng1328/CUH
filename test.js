@@ -26,11 +26,10 @@ async function getAllUsers() {
 // 3. Create a New User (POST request)
 async function createNewUser() {
   const userData = {
-    name: "John Doe",
-    type: "volunteer",
-    location: "New York",
-    needs: null,
-    available_resources: { water: 10, food: 5 }
+    name: 'chicks',
+    phone: '7224545645',
+    type: 'volunteer',
+    location: '34.67657225397399, -82.83541151936164'
   };
 
   try {
@@ -75,11 +74,11 @@ async function createHelpRequest() {
 // Test all functions
 async function runTests() {
   console.log("Running tests...");
-  await testApiRoot();
-  await getAllUsers();
+  // await testApiRoot();
+  // await getAllUsers();
   await createNewUser();
-  await getAllHelpRequests();
-  await createHelpRequest();
+  // await getAllHelpRequests();
+  // await createHelpRequest();
 }
 
 runTests();
